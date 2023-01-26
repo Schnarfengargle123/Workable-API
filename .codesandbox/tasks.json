@@ -1,0 +1,50 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "yarn install"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "start": {
+      "name": "start",
+      "command": "yarn start",
+      "runAtStart": true
+    },
+    "npm install": {
+      "name": "npm install",
+      "command": "npm install"
+    },
+    "npm outdated": {
+      "name": "npm outdated",
+      "command": "npm outdated"
+    },
+    "npm install @types/node@latest": {
+      "name": "npm install @types/node@latest",
+      "command": "npm install @types/node@latest"
+    },
+    "npm i nodemon": {
+      "name": "npm i nodemon",
+      "command": "npm i nodemon"
+    },
+    "npm install express --save": {
+      "name": "npm install express --save",
+      "command": "npm install express --save"
+    },
+    "npm watch": {
+      "name": "npm watch",
+      "command": "npm watch"
+    },
+    "npm run start": {
+      "name": "npm run start",
+      "command": "npm run start"
+    },
+    "npm run watch": {
+      "name": "npm run watch",
+      "command": "npm run watch"
+    }
+  }
+}
