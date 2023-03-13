@@ -45,6 +45,46 @@
     "npm run watch": {
       "name": "npm run watch",
       "command": "npm run watch"
+    },
+    "npm i cors": {
+      "name": "npm i cors",
+      "command": "npm i cors"
+    },
+    "npm install express-validator": {
+      "name": "npm install express-validator",
+      "command": "npm install express-validator"
+    },
+    "npm install prisma": {
+      "name": "npm install prisma",
+      "command": "npm install prisma"
+    },
+    "npx prisma init --datasource-provider sqlite": {
+      "name": "npx prisma init --datasource-provider sqlite",
+      "command": "npx prisma init --datasource-provider sqlite"
+    },
+    "npx prisma migrate dev --name initial-migration": {
+      "name": "npx prisma migrate dev --name initial-migration",
+      "command": "npx prisma migrate dev --name initial-migration"
+    },
+    "npx prisma db seed": {
+      "name": "npx prisma db seed",
+      "command": "npx prisma db seed"
+    },
+    "npx prisma seed --reset ./seed.js": {
+      "name": "npx prisma seed --reset ./seed.js",
+      "command": "npx prisma seed --reset ./seed.js"
+    },
+    "npx  prisma db seed --reset": {
+      "name": "npx  prisma db seed --reset",
+      "command": "npx  prisma db seed --reset"
+    },
+    "npm prisma -h": {
+      "name": "npm prisma -h",
+      "command": "npm prisma -h"
+    },
+    "npx prisma migrate reset": {
+      "name": "npx prisma migrate reset",
+      "command": "npx prisma migrate reset"
     }
   }
 }

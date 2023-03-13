@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const port = 8080;
 
+const cors = require("cors");
+
 const routes = require("./routes/routes");
 
 // app.get("/", (req, res) => {
@@ -12,12 +14,14 @@ const routes = require("./routes/routes");
 //   res.send("<h2>Login</h2>");
 // });
 
+app.options("*", cors());
+
+app.use(cors());
+// app.use(express.json());
 app.use("/", routes);
 
 app.listen(port, () => {
-  console.log(
-    `Welcome to Workable API. Visit https://fyeek4-${port}.preview.csb.app/`
-  );
+  console.log(`Welcome to Workable API. Visit https://g5jd7s-${port}.csb.app/`);
 });
 
 // const express = require('express')
