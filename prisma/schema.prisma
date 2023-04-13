@@ -11,20 +11,39 @@ datasource db {
 }
 
 model Employee {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  username String  @unique
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  username String    @unique
   password String
   admin    Boolean
-  shifts    Shift[]
+  Holiday  Holiday[]
+  shifts   Shift[]
+  token    String?
 }
 
 model Shift {
   id          Int      @id @default(autoincrement())
-  date        String 
+  date        String
   duration    String
-  start_time  String 
+  start_time  String
   finish_time String
-  employee    Employee     @relation(fields: [employeeId], references: [id])
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  employeeId  Int
+}
+
+model Holiday {
+  id         Int      @id @default(autoincrement())
+  start_date String
+  end_date   String
+  employee   Employee @relation(fields: [employeeId], references: [id])
   employeeId Int
+  approved   Boolean  @default(true)
+}
+
+model Customer {
+  id         Int      @id @default(autoincrement())
+  username String?
+  email String?
+  password String?
+  subscribed Boolean @default(false)
 }

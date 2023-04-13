@@ -85,6 +85,38 @@
     "npx prisma migrate reset": {
       "name": "npx prisma migrate reset",
       "command": "npx prisma migrate reset"
+    },
+    "npm i bcrypt": {
+      "name": "npm i bcrypt",
+      "command": "npm i bcrypt"
+    },
+    "npm i jsonwebtoken": {
+      "name": "npm i jsonwebtoken",
+      "command": "npm i jsonwebtoken"
+    },
+    "npx prisma migrate reset --skip-seed": {
+      "name": "npx prisma migrate reset --skip-seed",
+      "command": "npx prisma migrate reset --skip-seed"
+    },
+    "require('crypto').randomBytes(64).toString('hex')": {
+      "name": "require('crypto').randomBytes(64).toString('hex')",
+      "command": "require('crypto').randomBytes(64).toString('hex')"
+    },
+    "> require('crypto').randomBytes(64).toString('hex')": {
+      "name": "> require('crypto').randomBytes(64).toString('hex')",
+      "command": "> require('crypto').randomBytes(64).toString('hex')"
+    },
+    "node require('crypto').randomBytes(64).toString('hex')": {
+      "name": "node require('crypto').randomBytes(64).toString('hex')",
+      "command": "node require('crypto').randomBytes(64).toString('hex')"
+    },
+    "npm install dotenv": {
+      "name": "npm install dotenv",
+      "command": "npm install dotenv"
+    },
+    "npx prisma migrate dev --name added_customer_table": {
+      "name": "npx prisma migrate dev --name added_customer_table",
+      "command": "npx prisma migrate dev --name added_customer_table"
     }
   }
 }

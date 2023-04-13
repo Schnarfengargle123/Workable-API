@@ -9,7 +9,7 @@ async function main() {
       email: "admin1@email.com",
       username: "admin1",
       password: "employee",
-      admin: false,
+      admin: true,
       shifts: {
         create: [
           {
@@ -20,7 +20,39 @@ async function main() {
           },
         ],
       },
+      // token,
     },
+  });
+
+  await prisma.holiday.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      start_date: "2023-04-10",
+      end_date: "2023-04-17",
+      employeeId: 1,
+    },
+    // create: [
+    //   {
+    //     start_date: "2023-04-10",
+    //     end_date: "2023-04-17",
+    //     employeeId: 1,
+    //   },
+    //   {
+    //     start_date: "2023-04-18",
+    //     end_date: "2023-04-24",
+    //     employeeId: 1,
+    //   },
+    // ],
+
+    //   model Holiday {
+    //   id         Int      @id @default(autoincrement())
+    //   start_date String
+    //   end_date   String
+    //   employee   Employee @relation(fields: [employeeId], references: [id])
+    //   employeeId Int
+    //   approved   Boolean  @default(true)
+    // }
   });
 }
 
