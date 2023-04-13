@@ -11,14 +11,26 @@ exports.createShift = async (req, res) => {
   // and then create an `employeeID` variable, which contains the
   // `employeeId` associated with said username.
 
-  // const createdShift = {
-  //   // username: req.body.employee.username,
-  //   date: req.body.date,
-  //   start_time: req.body.start_time,
-  //   finish_time: req.body.finish_time,
-  //   duration: req.body.duration,
-  //   employeeId: req.body.employeeId,
-  // };
+  const createdShift = {
+    // username: req.body.employee.username,
+    date: req.body.date,
+    start_time: req.body.startTime,
+    finish_time: req.body.finishTime,
+    duration: req.body.duration,
+    employeeId: req.body.employee,
+  };
+
+  // const employeeIdValue = await prisma.shift.findUnique({
+  //   where: {
+  //     employee: req.body.username,
+  //   },
+  //   select: {
+  //     employeeId: true,
+  //   },
+  //   // include: {
+  //   //   employee: {},
+  //   // },
+  // });
 
   await prisma.shift.create({
     // include: {
@@ -39,10 +51,10 @@ exports.createShift = async (req, res) => {
 
     data: {
       date: req.body.date,
-      start_time: req.body.start_time,
-      finish_time: req.body.finish_time,
+      start_time: req.body.startTime,
+      finish_time: req.body.finishTime,
       duration: req.body.duration,
-      employeeId: req.body.employeeId,
+      employeeId: req.body.employee,
     },
 
     // data: {
@@ -54,8 +66,11 @@ exports.createShift = async (req, res) => {
     // },
   });
 
-  // console.log("Created Shift: ", createdShift);
+  console.log("Created Shift: ", createdShift);
+
   res.send(req.body);
+
+  // res.send(employeeIdValue);
 
   //   model Shift {
   //   id          Int      @id @default(autoincrement())
