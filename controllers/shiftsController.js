@@ -85,58 +85,103 @@ exports.createShift = async (req, res) => {
 
 // READ
 exports.shifts = async (req, res) => {
-  const shifts = await prisma.shift.findMany({
-    // // Includes related Employee object as a data column value of Shift.
-    // include: {
-    //   employee: true,
-    // },
+  // const employeeId = parseInt(req.query.employeeId);
+  // const duration = req.query.duration;
 
-    // select: {
-    //   employee: {
-    //     select: {
-    //       username: true,
-    //     },
-    //   },
-    // },
+  // if (employeeId) res.send(employeeId);
 
-    // Includes specific data column value from Employee,
-    // as a data column value of Shift.
-    include: {
-      employee: {
-        select: {
-          username: true,
+  if (Object.keys(req.query).length !== 0) {
+    console.log("Query: ", req.query);
+
+    const employeeId = parseInt(req.query.employeeId);
+    const duration = req.query.duration;
+
+    const filteredShift = await prisma.shift.findMany({
+      // where: {
+      //   employee: employeeId,
+      // },
+      // where: {
+      //   duration: duration,
+      // },
+      where: {
+        employeeId: employeeId,
+      },
+    });
+
+    res.send(filteredShift);
+    // res.send(employeeId);
+  } else {
+    const shifts = await prisma.shift.findMany({
+      // // Includes related Employee object as a data column value of Shift.
+
+      // Includes specific data column value from Employee,
+      // as a data column value of Shift.
+      include: {
+        employee: {
+          select: {
+            username: true,
+          },
         },
       },
-    },
+    });
 
-    // select: {
-    //   employee: {
-    //     select: {
-    //       id: true,
-    //     },
-    //   },
-    // },
-  });
-
-  console.log(req.query);
-  // console.log(shifts);
-  res.send(shifts);
+    console.log(req.query);
+    // console.log(shifts);
+    res.send(shifts);
+  }
 };
 
 // UPDATE
-exports.updateShift = (req, res) => {
-  const updatedData = {
-    date: req.body.date,
-    start_time: req.body.start_time,
-    finish_time: req.body.finish_time,
-    duration: req.body.duration,
-  };
+exports.updateShift = async (req, res) => {
+  // const updatedData = {
+  //   date: req.body.date,
+  //   start_time: req.body.start_time,
+  //   finish_time: req.body.finish_time,
+  //   duration: req.body.duration,
+  //   empl,
+  // };
+
+  await prisma.shift.update({
+    where: {
+      id: req.body.id,
+    },
+    data: {
+      date: req.body.date,
+      start_time: req.body.startTime,
+      finish_time: req.body.finishTime,
+      duration: req.body.duration,
+      employeeId: req.body.employee,
+    },
+  });
 
   res.send(req.body);
 };
 
-exports.deleteShift = (req, res) => {
+exports.deleteShift = async (req, res) => {
   // Delete Logic
+
+  console.log(req.params);
+
+  // let deletedShiftId = req.params.id;
+  // deletedShiftId = parseInt(deletedShiftId);
+  let deletedShiftId = parseInt(req.params.id); // This also works
+
+  // THIS WORKS
+
+  const deletedShift = await prisma.shift.delete({
+    where: {
+      id: deletedShiftId,
+      // id: parseInt(req.params.id),
+    },
+  });
+
+  res.send(deletedShift);
+
+  // console.log(deletedShift);
+  // res.send(typeof deletedShiftId);
+  // res.send(deletedShiftId);
+
+  // res.send(req.body.id);
 };
 
 // router.get("/staff", async (req, res) => {

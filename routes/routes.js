@@ -119,17 +119,6 @@ router.post("/shift_manager", authenticateToken, (req, res) => {
   res.send("You are authorised!");
 });
 
-router.get("/delete_shift/:id", (req, res) => {
-  const deletedShiftID = req.params.id;
-  res.send(`This is our deletedShiftID value => ${deletedShiftID}`);
-
-  //   const deleteShift = await prisma.shift.delete({
-  //   where: {
-  //     shift: 'bert@prisma.io',
-  //   },
-  // })
-});
-
 // ============================================================
 
 // CRUD (Create • Read • Update • Delete)
@@ -148,25 +137,14 @@ router.put("/update_shift", shiftsController.updateShift);
 
 // DELETE
 
-router.delete("/delete_shift/:id", async (req, res) => {
-  const deletedShiftID = req.params.id;
-  res.send(deletedShiftID);
+router.delete("/delete_shift/:id", shiftsController.deleteShift);
 
-  const deleteShift = await prisma.shift
-    .delete({
-      where: {
-        id: deletedShiftID,
-      },
-    })
-    .then(async () => {
-      await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-      console.error(e);
-      await prisma.$disconnect();
-      process.exit(1);
-    });
-});
+// const deleteShift = await prisma.shift
+//   .delete({
+//     where: {
+//       id: deletedShiftID,
+//     },
+//   })
 
 // router.post("/auth", express.json(), (req, res) => {
 //   res.json(req.body);
