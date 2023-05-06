@@ -97,12 +97,6 @@ exports.shifts = async (req, res) => {
     const duration = req.query.duration;
 
     const filteredShift = await prisma.shift.findMany({
-      // where: {
-      //   employee: employeeId,
-      // },
-      // where: {
-      //   duration: duration,
-      // },
       where: {
         employeeId: employeeId,
       },
@@ -146,9 +140,9 @@ exports.updateShift = async (req, res) => {
       id: req.body.id,
     },
     data: {
-      date: req.body.date,
+      date: req.body.shiftDate,
       start_time: req.body.startTime,
-      finish_time: req.body.finishTime,
+      finish_time: req.body.endTime,
       duration: req.body.duration,
       employeeId: req.body.employee,
     },
@@ -160,11 +154,8 @@ exports.updateShift = async (req, res) => {
 exports.deleteShift = async (req, res) => {
   // Delete Logic
 
-  console.log(req.params);
-
-  // let deletedShiftId = req.params.id;
-  // deletedShiftId = parseInt(deletedShiftId);
   let deletedShiftId = parseInt(req.params.id); // This also works
+  console.log(req.params);
 
   // THIS WORKS
 

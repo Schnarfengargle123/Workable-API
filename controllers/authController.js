@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const bcrypt = require("bcrypt");
-const { body, validationResult } = require("express-validator");
+const { body, validationResult, check } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
 exports.auth = async (req, res) => {
@@ -26,6 +26,8 @@ exports.auth = async (req, res) => {
 
   employee.token = token;
 
+  // Attempting to register
+
   if (req.body.confirmPassword) {
     console.log("confirmPassword: ", req.body.confirmPassword);
 
@@ -45,20 +47,14 @@ exports.auth = async (req, res) => {
     console.log(hashedPassword);
 
     const createdEmployee = await prisma.employee.create({ data: employee });
-    // .then(async () => {
-    //   await prisma.$disconnect();
-    // })
-    // .catch(async (e) => {
-    //   console.error(e);
-    //   await prisma.$disconnect();
-    //   process.exit(1);
-    // });
 
     console.log("Prisma createEmployee: " + createdEmployee);
     console.log(req.body);
     res.send(employee);
+
+    // // Attempting to login
   } else {
-    const exisitingUserPassword = await prisma.employee.findUnique({
+    const existingUserPassword = await prisma.employee.findUnique({
       where: { email: employee.email },
       select: { password: true },
     });
@@ -67,30 +63,36 @@ exports.auth = async (req, res) => {
       where: { email: employee.email },
     });
 
-    const checkPassword = bcrypt.compare(
-      employee.password,
-      exisitingUserPassword,
-      (err, result) => {
-        console.log(err);
-        console.log(result);
-      }
-    );
+    console.log("existingUserPassword: ", existingUserPassword); // Error
+    console.log("loggedInUser: ", loggedInUser);
 
-    // const checkPassword = bcrypt.compare(
-    //   employee.password,
-    //   loggedInUser.password,
-    //   (err, result) => {
-    //     console.log(err);
-    //     console.log(result);
-    //   }
-    // );
+    let isValidLoginAttempt; // Allow bcrypt to dictate and set this value
+
+    const checkPassword = () => {
+      bcrypt.compare(
+        employee.password,
+        existingUserPassword.password,
+        (err, result) => {
+          isValidLoginAttempt = result;
+          console.log("isValidLoginAttempt: ", isValidLoginAttempt);
+
+          console.log("err: ", err);
+          console.log("result: ", result);
+
+          if (result) {
+            res.send(loggedInUser);
+          } else {
+            res.send("Incorrect password!");
+          }
+        }
+      );
+    };
 
     if (!loggedInUser) {
       res.status(400);
       res.send("No user found!");
-    } else if (loggedInUser && checkPassword) {
-      console.log(loggedInUser);
-      res.send(loggedInUser);
+    } else if (loggedInUser) {
+      checkPassword();
     }
   }
 };
