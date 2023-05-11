@@ -19,7 +19,7 @@ const authenticateToken = require("../middleware/auth");
 
 router.get("/", (req, res) => {
   res.send("Welcome to Workable!");
-})
+});
 
 router.post("/auth", authController.auth);
 
@@ -77,3 +77,7 @@ router.get("/products", (req, res) => {
 });
 
 module.exports = router;
+
+// const {package} = require('package'); // CJS (Common JS)
+
+// import {package} from 'package'; // ESM (EcmaScript Modules)
