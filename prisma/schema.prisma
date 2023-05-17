@@ -37,13 +37,5 @@ model Holiday {
   end_date   String
   employee   Employee @relation(fields: [employeeId], references: [id])
   employeeId Int
-  approved   Boolean  @default(true)
-}
-
-model Customer {
-  id         Int      @id @default(autoincrement())
-  username String?
-  email String?
-  password String?
-  subscribed Boolean @default(false)
+  approved   Boolean  @default(false)
 }

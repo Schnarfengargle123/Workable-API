@@ -9,7 +9,6 @@ exports.auth = async (req, res) => {
   const employee = {
     email: req.body.email,
     username: req.body.username,
-    // password: hashedPassword,
     password: req.body.password,
     admin: false,
     token: null,
@@ -52,7 +51,7 @@ exports.auth = async (req, res) => {
     console.log(req.body);
     res.send(employee);
 
-    // // Attempting to login
+    // Attempting to login
   } else {
     const existingUserPassword = await prisma.employee.findUnique({
       where: { email: employee.email },
@@ -62,6 +61,35 @@ exports.auth = async (req, res) => {
     const loggedInUser = await prisma.employee.findUnique({
       where: { email: employee.email },
     });
+
+    const currentDate = new Date().getTime();
+
+    const upcomingShifts = await prisma.shift.findMany({
+      where: { employeeId: loggedInUser.id },
+      // where: {
+      //   AND: [
+      //     { employeeId: loggedInUser.id },
+      //     {
+      //       date: {
+      //         // date.getTime(), i.e, we need the total milliseconds
+      //         gte: currentDate,
+      //       },
+      //     },
+      //   ],
+      // },
+      orderBy: {
+        date: "asc",
+        // Need to filter out shifts that have already been worked.
+        // i.e, shifts prior to current date.
+      },
+    });
+
+    const upcomingHolidays = await prisma.holiday.findMany({
+      where: { employeeId: loggedInUser.id },
+    });
+
+    loggedInUser["upcomingShifts"] = upcomingShifts;
+    loggedInUser["upcomingHolidays"] = upcomingHolidays;
 
     console.log("existingUserPassword: ", existingUserPassword); // Error
     console.log("loggedInUser: ", loggedInUser);
@@ -80,6 +108,7 @@ exports.auth = async (req, res) => {
           console.log("result: ", result);
 
           if (result) {
+            // res.send(loggedInUser);
             res.send(loggedInUser);
           } else {
             res.send("Incorrect password!");
