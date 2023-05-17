@@ -61,6 +61,13 @@ exports.holidays = async (req, res) => {
         end_date: filteredHolidayData.endDate,
         approved: filteredHolidayData.approved,
       },
+      include: {
+        employee: {
+          select: {
+            username: true,
+          },
+        },
+      },
     });
 
     res.send(filteredHolidays);
